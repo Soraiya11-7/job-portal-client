@@ -1,6 +1,7 @@
 import { Link, NavLink, useLoaderData, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthProviderContext } from "../Provider/AuthProvider";
+import logo from '../assets/logo.png'
 
 const Navbar = () => {
     const { user, signOutUser } = useContext(AuthProviderContext);
@@ -63,9 +64,12 @@ const handleLogOut = () => {
                         {links}
                     </ul>
                 </div>
-                { <div className=" w-14 h-10 md:w-20 md:h-14">
-                    Job
-                {/* <img className="w-full h-full overflow-hidden rounded-xl object-cover" src={logo} alt="" /> */}
+                {<div className="flex gap-1 items-center">
+                    <div className=" w-10 h-10 ">
+                   
+                   <img className="w-full h-full overflow-hidden rounded-xl object-cover" src={logo} alt="" />
+                   </div>
+                   <h2 className="text-2xl">Job </h2>
                 </div> }
             </div>
             <div className="navbar-center hidden lg:flex">

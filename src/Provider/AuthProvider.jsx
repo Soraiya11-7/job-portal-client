@@ -38,16 +38,7 @@ const signInWithGoogle = () => {
     return signInWithPopup(auth, provider);
 }
 
-//update User Profile info
-const updateUserProfile = (updatedData) =>{
-    setLoading(true)
-    return updateProfile(auth.currentUser, updatedData ) .finally(() => setLoading(false));;
-}
 
-//forget ...
-const forgetSecretKey = (email) => {
-    return sendPasswordResetEmail(auth, email);
-}
 
 
 useEffect(() =>{
@@ -71,9 +62,8 @@ const authInfo = {
     createUser,
     loginUser,
     signInWithGoogle,
-    forgetSecretKey,
     signOutUser,
-    updateUserProfile,
+   
 }
     return (
         <AuthProviderContext.Provider value={authInfo}>

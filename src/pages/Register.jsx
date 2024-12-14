@@ -1,14 +1,15 @@
 import Lottie from 'lottie-react';
 import React, { useContext, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link,  useLocation, useNavigate } from 'react-router-dom';
 import registerLottie from '../assets/Lottie/register.json'
 import { AuthProviderContext } from '../Provider/AuthProvider';
+import SocialLogin from '../shared/SocialLogin';
 
 const Register = () => {
 
         const navigate = useNavigate();
-        const { createUser, user, setUser, updateUserProfile, signInWithGoogle } = useContext(AuthProviderContext);
+        const { createUser, user, setUser, signInWithGoogle } = useContext(AuthProviderContext);
         const location = useLocation();
         const [error, setError] = useState("");
         const [showSecretKey, setShowSecretKey] = useState(false);
@@ -39,21 +40,6 @@ const Register = () => {
                 .then((res) => {
                     console.log(res.user);
                     setUser(res.user)
-                    updateUserProfile({ displayName: name })
-                        .then(() => {
-                            setUser({
-                                ...res.user,
-                                displayName: name,
-                               
-                            });
-                            navigate('/my-profile');
-                        })
-                        .catch((err) => {
-    
-                            const errorMessage = err.message;
-                            const errorCode = errorMessage.match(/\(([^)]+)\)/)?.[1];
-                            setError(errorCode || 'Unknown error');
-                        })
                     e.target.reset();
     
                 })
@@ -125,6 +111,8 @@ const Register = () => {
                             <button className="btn btn-primary">Register</button>
                         </div>
                     </form>
+                    <SocialLogin></SocialLogin>
+                    <h2 className='mb-6 text-center'>You have an account? <Link className='text-blue-400' to='/auth/login'>Login Now</Link></h2>
                 </div>
             </div>
         </div>
