@@ -4,6 +4,7 @@ import { AuthProviderContext } from '../Provider/AuthProvider';
 import Lottie from 'lottie-react';
 import registerLottie from '../assets/Lottie/register.json'
 import SocialLogin from '../shared/SocialLogin';
+import axios from 'axios';
 // import { FaEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
@@ -24,6 +25,13 @@ const Login = () => {
         loginUser(email, password)
             .then((result) => {
                 // console.log(result.user);
+
+                const user = {email: email}
+
+                axios.post('http://localhost:5000/jwt',user, {withCredentials:true})
+                .then(res => {
+                    console.log(res.data);
+                })
                 e.target.reset();
                 navigate(location?.state ? location.state : '/');
             })

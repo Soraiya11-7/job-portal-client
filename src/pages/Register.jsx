@@ -41,6 +41,7 @@ const Register = () => {
                     console.log(res.user);
                     setUser(res.user)
                     e.target.reset();
+                    navigate('/');
     
                 })
                 .catch((err) => {

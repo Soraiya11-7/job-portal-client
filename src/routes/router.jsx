@@ -4,6 +4,10 @@ import Register from "../pages/Register";
 import AuthLayout from "../Layout/AuthLayout";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import SecretRoutes from "./SecretRoutes";
+// import MyProfile from "../pages/MyProfile";
+import ApplyJob from "../pages/ApplyJob";
+import MyProfile from "../pages/MyProfile";
 
 const router = createBrowserRouter([
     {
@@ -16,21 +20,18 @@ const router = createBrowserRouter([
             element: <Home></Home>,
             // loader: () => fetch('../brands.json'),
           },
+          {
+            path: "/my-profile",
+            element:  <SecretRoutes><MyProfile></MyProfile></SecretRoutes> ,
+          //   // loader: ({params}) => fetch(`https://assignment-10-server-gamma-mocha.vercel.app/review/${params.id}`),
+          },
+          {
+            path: "/apply/:id",
+            element:  <SecretRoutes><ApplyJob></ApplyJob></SecretRoutes> ,
+            // loader: ({params}) => fetch(`https://assignment-10-server-gamma-mocha.vercel.app/review/${params.id}`),
+          },
           
-        //   {
-        //     path: "/brands",
-        //     element: <Brands></Brands>,
-        //     loader: () => fetch('/brands.json'),
-        //   },
-          
-        //   {
-        //     path: "/about-dev",
-        //     element: <AboutDev></AboutDev>,
-        //   },
-        //   {
-        //     path: "/my-profile",
-        //     element: <SecretRoutes><MyProfile></MyProfile></SecretRoutes> ,
-        //   },
+      
         //   {
         //     path: "/brand/:id",
         //     element: <SecretRoutes><Coupon></Coupon></SecretRoutes>,
