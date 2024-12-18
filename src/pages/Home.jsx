@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Card from '../components/card';
+// import Card from '../components/card';
 import Jobs from '../components/Jobs';
 
 const Home = () => {

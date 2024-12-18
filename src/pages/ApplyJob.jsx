@@ -24,7 +24,7 @@ const ApplyJob = () => {
         }
         setError("");
 
-        fetch('http://localhost:5000/job-application', {
+        fetch('https://job-portal-server-blue.vercel.app/job-application', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

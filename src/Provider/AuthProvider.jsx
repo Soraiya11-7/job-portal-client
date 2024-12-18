@@ -1,5 +1,6 @@
 
-import {app} from "../firebase/firebase.init"
+import axios from "axios";
+import { app } from "../firebase/firebase.init"
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 const auth = getAuth(app);
@@ -9,62 +10,77 @@ export const AuthProviderContext = createContext(null);
 
 const provider = new GoogleAuthProvider();
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
 
-const [user,setUser] = useState(null);
-const [loading, setLoading] = useState(true);
-const [mail, setMail] = useState("");
-const  name = 'hello';
-//create new user
-const createUser = (email, password ) =>{
-    setLoading(true)
-    return createUserWithEmailAndPassword(auth, email, password)
-}
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [mail, setMail] = useState("");
+    const name = 'hello';
+    //create new user
+    const createUser = (email, password) => {
+        setLoading(true)
+        return createUserWithEmailAndPassword(auth, email, password)
+    }
 
-//signout user
-const signOutUser = () => {
-    setLoading(true)
-    return signOut(auth);
-}
+    //signout user
+    const signOutUser = () => {
+        setLoading(true)
+        return signOut(auth);
+    }
 
-//signIn with email,secret key
-const loginUser = (email, password ) =>{
-    setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password)
-}
-//signIn with Google
-const signInWithGoogle = () => {
-    setLoading(true)
-    return signInWithPopup(auth, provider);
-}
+    //signIn with email,secret key
+    const loginUser = (email, password) => {
+        setLoading(true);
+        return signInWithEmailAndPassword(auth, email, password)
+    }
+    //signIn with Google
+    const signInWithGoogle = () => {
+        setLoading(true)
+        return signInWithPopup(auth, provider);
+    }
 
+    useEffect(() => {
+        const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser)
+           
+            if (currentUser?.email) {
+                const user = { email: currentUser.email }
 
-
-
-useEffect(() =>{
-    const unSubscribe = onAuthStateChanged(auth, (currentUser) =>{
-        setUser(currentUser)
-        setLoading(false)
+                axios.post('https://job-portal-server-blue.vercel.app/jwt', user, { withCredentials: true })
+                    .then(res => {
+                        // console.log('login token', res.data);
+                        setLoading(false);
+                    })
+            }
+            else{
+                //logout
+                
+                axios.post('https://job-portal-server-blue.vercel.app/logout', {}, { withCredentials: true })
+                    .then(res => {
+                        // console.log('logout',res.data);
+                        setLoading(false);
+                    })
+            }
         })
         return () => {
             unSubscribe();
         }
 
-} ,[]);
+    }, []);
 
-const authInfo = {
-    name,
-    user,
-    setMail,
-    mail,
-    loading,
-    setUser,
-    createUser,
-    loginUser,
-    signInWithGoogle,
-    signOutUser,
-   
-}
+    const authInfo = {
+        name,
+        user,
+        setMail,
+        mail,
+        loading,
+        setUser,
+        createUser,
+        loginUser,
+        signInWithGoogle,
+        signOutUser,
+
+    }
     return (
         <AuthProviderContext.Provider value={authInfo}>
             {children}

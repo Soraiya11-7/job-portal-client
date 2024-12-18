@@ -1,19 +1,24 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthProviderContext } from '../Provider/AuthProvider';
 import axios from 'axios';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const MyProfile = () => {
     const { user } = useContext(AuthProviderContext);
     const [jobs, setJobs] = useState([]);
 
+    const axiosSecure = useAxiosSecure();
     useEffect(() => {
 
-        // fetch(`http://localhost:5000/job-application?email=${user.email}`)
+        // fetch(`https://job-portal-server-blue.vercel.app/job-application?email=${user.email}`)
         //     .then(res => res.json())
         //     .then(data => setJobs(data))
 
-        axios.get(`http://localhost:5000/job-application?email=${user.email}`, {withCredentials: true})
-        .then(res => setJobs(res.data))
+        // axios.get(`https://job-portal-server-blue.vercel.app/job-application?email=${user.email}`, {withCredentials: true})
+        // .then(res => setJobs(res.data));
+
+        axiosSecure.get(`/job-application?email=${user.email}`)
+        .then(res => setJobs(res.data));
 
     }, [user.email])
     return (

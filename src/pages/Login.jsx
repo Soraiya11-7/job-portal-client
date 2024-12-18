@@ -26,12 +26,12 @@ const Login = () => {
             .then((result) => {
                 // console.log(result.user);
 
-                const user = {email: email}
+                // const user = {email: email}
 
-                axios.post('http://localhost:5000/jwt',user, {withCredentials:true})
-                .then(res => {
-                    console.log(res.data);
-                })
+                // axios.post('https://job-portal-server-blue.vercel.app/jwt',user, {withCredentials:true})
+                // .then(res => {
+                //     console.log(res.data);
+                // })
                 e.target.reset();
                 navigate(location?.state ? location.state : '/');
             })
